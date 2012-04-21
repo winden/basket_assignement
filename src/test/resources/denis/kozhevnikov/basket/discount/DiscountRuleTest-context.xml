@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rttp="http://www.ubs.com/schemas/rttp"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.ubs.com/schemas/rttp http://www.ubs.com/schemas/rttp/rttp.xsd">
+
+	<bean id="basketTwoApples" class="denis.kozhevnikov.basket.domain.BuyableBasketItems" />
+	<bean id="basketTwoApplesExpectedDiscount"
+		class="denis.kozhevnikov.basket.types.monetary.PriceOfBasketItem"
+		factory-method="valueOf">
+		<constructor-arg>
+			<bean class="java.math.BigDecimal" factory-method="valueOf">
+				<constructor-arg><value>0.20</value></constructor-arg>
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="basketTwoApplesTwoBreadsFourSoupsOneMilk" class="denis.kozhevnikov.basket.domain.BuyableBasketItems" />
+	<bean id="basketTwoApplesTwoBreadsFourSoupsOneMilkExpectedDiscount"
+		class="denis.kozhevnikov.basket.types.monetary.PriceOfBasketItem"
+		factory-method="valueOf">
+		<constructor-arg>
+			<bean class="java.math.BigDecimal" factory-method="valueOf">
+				<constructor-arg><value>0.80</value></constructor-arg>
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="basketOneBreadOneSoupOneMilk" class="denis.kozhevnikov.basket.domain.BuyableBasketItems" />
+	<bean id="basketOneBreadOneSoupOneMilkExpectedDiscount"
+		class="denis.kozhevnikov.basket.types.monetary.PriceOfBasketItem"
+		factory-method="valueOf">
+		<constructor-arg>
+			<bean class="java.math.BigDecimal" factory-method="valueOf">
+				<constructor-arg><value>0.00</value></constructor-arg>
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="appleDiscount" class="denis.kozhevnikov.basket.discount.DiscountRule">
+		<constructor-arg>
+			<bean class="denis.kozhevnikov.basket.discount.DiscountInfo">
+				<property name="value"><value>0.1</value></property>
+				<property name="targetDiscountedItem" ref="applePrototype" />
+				<property name="discountPredicate">
+					<map>
+						<entry>
+							<key><ref bean="applePrototype" /></key>
+							<value>1</value>
+						</entry>
+					</map>
+				</property>
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="breadDiscount" class="denis.kozhevnikov.basket.discount.DiscountRule">
+		<constructor-arg>
+			<bean class="denis.kozhevnikov.basket.discount.DiscountInfo">
+				<property name="value"><value>0.5</value></property>
+				<property name="targetDiscountedItem" ref="breadPrototype" />
+				<property name="discountPredicate">
+					<map>
+						<entry>
+							<key><ref bean="soupPrototype" /></key>
+							<value>2</value>
+						</entry>
+					</map>
+				</property>
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="applePrototype" class="denis.kozhevnikov.basket.domain.BuyableBasketItemImpl">
+		<property name="price" ref="applePrice" />
+		<property name="title">
+			<bean class="denis.kozhevnikov.basket.types.titleofbasketitem.TitleOfBasketItem">
+				<constructor-arg value="Apples" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="milkPrototype" class="denis.kozhevnikov.basket.domain.BuyableBasketItemImpl">
+		<property name="price" ref="milkPrice" />
+		<property name="title">
+			<bean class="denis.kozhevnikov.basket.types.titleofbasketitem.TitleOfBasketItem">
+				<constructor-arg value="Milk" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="breadPrototype" class="denis.kozhevnikov.basket.domain.BuyableBasketItemImpl">
+		<property name="price" ref="breadPrice" />
+		<property name="title">
+			<bean class="denis.kozhevnikov.basket.types.titleofbasketitem.TitleOfBasketItem">
+				<constructor-arg value="Bread" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="soupPrototype" class="denis.kozhevnikov.basket.domain.BuyableBasketItemImpl">
+		<property name="price" ref="soupPrice" />
+		<property name="title">
+			<bean class="denis.kozhevnikov.basket.types.titleofbasketitem.TitleOfBasketItem">
+				<constructor-arg value="Soup" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="applePrice"
+		class="denis.kozhevnikov.basket.types.monetary.PriceOfBasketItem"
+		factory-method="valueOf">
+		<constructor-arg>
+			<bean class="java.math.BigDecimal" factory-method="valueOf">
+				<constructor-arg><value>1.00</value></constructor-arg>
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="milkPrice"
+		class="denis.kozhevnikov.basket.types.monetary.PriceOfBasketItem"
+		factory-method="valueOf">
+		<constructor-arg>
+			<bean class="java.math.BigDecimal" factory-method="valueOf">
+				<constructor-arg><value>1.30</value></constructor-arg>
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="breadPrice"
+		class="denis.kozhevnikov.basket.types.monetary.PriceOfBasketItem"
+		factory-method="valueOf">
+		<constructor-arg>
+			<bean class="java.math.BigDecimal" factory-method="valueOf">
+				<constructor-arg><value>0.80</value></constructor-arg>
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="soupPrice"
+		class="denis.kozhevnikov.basket.types.monetary.PriceOfBasketItem"
+		factory-method="valueOf">
+		<constructor-arg>
+			<bean class="java.math.BigDecimal" factory-method="valueOf">
+				<constructor-arg><value>0.65</value></constructor-arg>
+			</bean>
+		</constructor-arg>
+	</bean>
+</beans>

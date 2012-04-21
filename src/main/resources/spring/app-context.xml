@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="gui" class="denis.kozhevnikov.basket.ui.UICommandLine" />
+	<bean id="subtotalProcessor" class="denis.kozhevnikov.basket.subtotal.SubtotalProcessorImpl" />
+	<bean id="totalProcessor" class="denis.kozhevnikov.basket.total.TotalProcessorImpl" />
+	<bean id="discountProcessor" class="denis.kozhevnikov.basket.discount.DiscountProcessorImpl">
+		<property name="rules">
+			<list>
+				<bean class="denis.kozhevnikov.basket.discount.DiscountRule">
+					<constructor-arg>
+						<bean class="denis.kozhevnikov.basket.discount.DiscountInfo">
+							<property name="value"><value>0.1</value></property>
+							<property name="targetDiscountedItem" ref="applePrototype" />
+							<property name="discountPredicate">
+								<map>
+									<entry>
+										<key><ref bean="applePrototype"/></key>
+										<value>1</value>
+									</entry>
+								</map>
+							</property>
+						</bean>
+					</constructor-arg>
+				</bean>
+				<bean class="denis.kozhevnikov.basket.discount.DiscountRule">
+					<constructor-arg>
+						<bean class="denis.kozhevnikov.basket.discount.DiscountInfo">
+							<property name="value"><value>0.5</value></property>
+							<property name="targetDiscountedItem" ref="breadPrototype" />
+							<property name="discountPredicate">
+								<map>
+									<entry>
+										<key><ref bean="soupPrototype"/></key>
+										<value>2</value>
+									</entry>
+								</map>
+							</property>
+						</bean>
+					</constructor-arg>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="applePrototype" class="denis.kozhevnikov.basket.domain.BuyableBasketItemImpl">
+		<property name="price" ref="applePrice" />
+		<property name="title">
+			<bean class="denis.kozhevnikov.basket.types.titleofbasketitem.TitleOfBasketItem">
+				<constructor-arg value="Apples" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="milkPrototype" class="denis.kozhevnikov.basket.domain.BuyableBasketItemImpl">
+		<property name="price" ref="milkPrice" />
+		<property name="title">
+			<bean class="denis.kozhevnikov.basket.types.titleofbasketitem.TitleOfBasketItem">
+				<constructor-arg value="Milk" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="breadPrototype" class="denis.kozhevnikov.basket.domain.BuyableBasketItemImpl">
+		<property name="price" ref="breadPrice" />
+		<property name="title">
+			<bean class="denis.kozhevnikov.basket.types.titleofbasketitem.TitleOfBasketItem">
+				<constructor-arg value="Bread" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="soupPrototype" class="denis.kozhevnikov.basket.domain.BuyableBasketItemImpl">
+		<property name="price" ref="soupPrice" />
+		<property name="title">
+			<bean class="denis.kozhevnikov.basket.types.titleofbasketitem.TitleOfBasketItem">
+				<constructor-arg value="Soup" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="applePrice"
+		class="denis.kozhevnikov.basket.types.monetary.PriceOfBasketItem"
+		factory-method="valueOf">
+		<constructor-arg>
+			<bean class="java.math.BigDecimal" factory-method="valueOf">
+				<constructor-arg><value>1.00</value></constructor-arg>
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="milkPrice"
+		class="denis.kozhevnikov.basket.types.monetary.PriceOfBasketItem"
+		factory-method="valueOf">
+		<constructor-arg>
+			<bean class="java.math.BigDecimal" factory-method="valueOf">
+				<constructor-arg><value>1.30</value></constructor-arg>
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="breadPrice"
+		class="denis.kozhevnikov.basket.types.monetary.PriceOfBasketItem"
+		factory-method="valueOf">
+		<constructor-arg>
+			<bean class="java.math.BigDecimal" factory-method="valueOf">
+				<constructor-arg><value>0.80</value></constructor-arg>
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="soupPrice"
+		class="denis.kozhevnikov.basket.types.monetary.PriceOfBasketItem"
+		factory-method="valueOf">
+		<constructor-arg>
+			<bean class="java.math.BigDecimal" factory-method="valueOf">
+				<constructor-arg><value>0.65</value></constructor-arg>
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="parsingUIExceptionText" class="java.lang.String">
+		<constructor-arg>
+			<value>
+Unfortunately, your input line doesn't match the following pattern:
+PriceBasket item1 item2 item3 ...
+			</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="inputItemIsNotRecognisedUIExceptionText" class="java.lang.String">
+		<constructor-arg>
+			<value>
+Unfortunately, it seems like you would like to add some items that cannot be added to the basket.
+Currently only the following items can be added: Apples Milk Bread Soup.
+			</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="priceBasketInputText" class="java.lang.String">
+		<constructor-arg>
+			<value>PriceBasket</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="totalTextNoDiscounts" class="java.lang.String">
+		<constructor-arg>
+			<value>Total price:</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="totalTextDiscounts" class="java.lang.String">
+		<constructor-arg>
+			<value>Total:</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="noDiscountText" class="java.lang.String">
+		<constructor-arg>
+			<value>(No offers available)</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="subtotalText" class="java.lang.String">
+		<constructor-arg>
+			<value>Subtotal:</value>
+		</constructor-arg>
+	</bean>
+</beans>

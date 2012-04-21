@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rttp="http://www.ubs.com/schemas/rttp"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.ubs.com/schemas/rttp http://www.ubs.com/schemas/rttp/rttp.xsd">
+
+	<bean id="priceBasketInputTextNegative" class="java.lang.String">
+		<constructor-arg>
+			<value>PriceNegativeBasket Apples Milk Apple</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="priceBasketInputTextPositive" class="java.lang.String">
+		<constructor-arg>
+			<value>PriceBasket Apples Milk Apple</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="priceBasketInputTextWithNoItems" class="java.lang.String">
+		<constructor-arg>
+			<value>PriceBasket</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="commandLineUIUnderTest" class="denis.kozhevnikov.basket.ui.UICommandLine" />
+</beans>

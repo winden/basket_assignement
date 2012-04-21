@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rttp="http://www.ubs.com/schemas/rttp"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.ubs.com/schemas/rttp http://www.ubs.com/schemas/rttp/rttp.xsd">
+
+	<bean id="orange" class="java.lang.String" factory-method="valueOf">
+		<constructor-arg>
+			<value>Orange</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="apple1" class="java.lang.String" factory-method="valueOf">
+		<constructor-arg>
+			<value>Apples</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="apple2" class="java.lang.String" factory-method="valueOf">
+		<constructor-arg>
+			<value>Apple</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="milk" class="java.lang.String" factory-method="valueOf">
+		<constructor-arg>
+			<value>Milk</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="titleUnderTest"
+		class="denis.kozhevnikov.basket.types.titleofbasketitem.TitleOfBasketItem"
+		factory-method="valueOf">
+		<constructor-arg>
+			<ref bean="apple1" />
+		</constructor-arg>
+	</bean>
+
+	<bean id="copyOfTitleUnderTest"
+		class="denis.kozhevnikov.basket.types.titleofbasketitem.TitleOfBasketItem"
+		factory-method="valueOf">
+		<constructor-arg>
+			<ref bean="apple2" />
+		</constructor-arg>
+	</bean>
+
+	<bean id="differentFromTitleUnderTest"
+		class="denis.kozhevnikov.basket.types.titleofbasketitem.TitleOfBasketItem"
+		factory-method="valueOf">
+		<constructor-arg>
+			<ref bean="milk" />
+		</constructor-arg>
+	</bean>
+</beans>
